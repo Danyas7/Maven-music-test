@@ -1,0 +1,14 @@
+{
+  "name": "Maven Test",
+  "version": "1.0.0",
+  "description": "Wonderful World of Music Search",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Maven",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

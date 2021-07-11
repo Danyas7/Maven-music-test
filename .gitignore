@@ -1,0 +1,7 @@
+**/.build/
+**/.idea/
+**/bin/Debug/
+**/obj/Debug/
+**node_modules**
+.DS_Store
+
