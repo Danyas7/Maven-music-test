@@ -43,30 +43,34 @@ const albumTrackList = (trackList, release) => {
 };
 
 const albumData = data => {
-    const findExtraArtists = false;
+    // const findExtraArtists = false;
 
     for (const prop in data) {
-        const album = data[prop];
+        //Adding the if condition to consider properties
+        //attached to the object itself
+        if (data.hasOwnProperty(prop)) {
+            const album = data[prop];
 
-        const title = album.Title;
-        const release = {
-            id: album.Id,
-            title,
-            notes: album.Notes
-        };
-        const artists = album.Artists;
-
-        let extraArtists = album.ExtraArtists;
-        if (!findExtraArtists) {
-            extraArtists = [];
-        }
-        const combineArtists = [...artists, ...extraArtists];
-        const allArtists = combineArtists.map((artist) => {
-            return {
-                id: artist.Id,
-                name: artist.Name,
+            const title = album.Title;
+            const release = {
+                id: album.Id,
+                title,
+                notes: album.Notes
             };
-        });
+            const artists = album.Artists;
+
+            let extraArtists = album.ExtraArtists;
+            //I did not need this, I was trying to reset extraArtists to an empty array
+            // if (!findExtraArtists) {
+            //     extraArtists = [];
+            // }
+            const combineArtists = [...artists, ...extraArtists];
+            const allArtists = combineArtists.map((artist) => {
+                return {
+                    id: artist.Id,
+                    name: artist.Name,
+                };
+            });
         albumEntries.releases[title] = {
             ...release,
             artist: allArtists,
@@ -76,14 +80,18 @@ const albumData = data => {
         albumArtistsList(extraArtists, release);
         albumTrackList(album.TrackList, release);
     }
+  }
 };
 
-const getAlbumData = async () => {
+const getAlbumData = () => {
+    //Added a new Promise() instead of async/await so that the data parsed,
+    //traversed and the albumEntries is ready before returning
+    return new Promise(resolve => {
     try {
         if (dataParsed) {
-            return albumEntries;
+            resolve(albumEntries);
         } else {
-            await fs.readFile('./data.json', 'utf8', (error, data) => {
+            fs.readFile('./data.json', 'utf8', (error, data) => {
                 if (error) {
                     console.error('Could not parse json file')
                     throw error ('Could not parse json file', error);
@@ -91,7 +99,7 @@ const getAlbumData = async () => {
                     let { releases } = JSON.parse(data);
                     albumData(releases);
                     dataParsed = true;
-                    return albumEntries;
+                    resolve(albumEntries);
                 }
             });
 
@@ -99,5 +107,6 @@ const getAlbumData = async () => {
     } catch (error) {
         console.error("JSON file failed to parse", error);
     }
+    });
 };
 export default getAlbumData;

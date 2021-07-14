@@ -3,12 +3,17 @@
   "version": "1.0.0",
   "description": "Wonderful World of Music Search",
   "main": "server.js",
+  "engines": {
+    "node": "14.17.0"
+  },
   "type": "module",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "benchmark": "node benchmark.js"
   },
   "author": "Maven",
   "dependencies": {
+    "benchmark": "^2.1.4",
     "express": "^4.17.1"
   }
 }
