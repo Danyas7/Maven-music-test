@@ -15,9 +15,17 @@ To run the app, enter the following commands:
 
 ```
 cd service
+nvm use 14.17.0 
 npm i
 npm run start
 ```
+
+Then, to run the benchmark test, enter the following commands:
+
+```
+npm run benchmark
+```
+
 
 
 Each suggestion collection should return no more than 5 entries.

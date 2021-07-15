@@ -1,8 +1,12 @@
 import express from 'express';
 import routes from './routes.js';
-import getAlbumData from "./album.js";
+//import getAlbumData from "./album.js";
 
-getAlbumData().then(data => data);
+//initialize data load, No longer needed
+//Added a new Promise() to getAlbumData() instead of async/await
+//because the function searchByEndpoint was calling getAlbumData()
+//to be executed before it was ready
+// getAlbumData().then(data => data);
 
 const app = express();
 const port = 80;
