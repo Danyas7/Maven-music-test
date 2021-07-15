@@ -1,6 +1,7 @@
 import getAlbumData from "./album.js";
 
 const searchByEndpoint = async (endpoint, prefix) => {
+    console.time('searchTime');
     const dataList = [];
     const suggestionMax = 5;
     //Removed the .then() since getAlbumData() returns
@@ -21,6 +22,7 @@ const searchByEndpoint = async (endpoint, prefix) => {
             }
         }
     }
+    console.timeEnd('searchTime');
     return dataList;
 };
 export default searchByEndpoint;

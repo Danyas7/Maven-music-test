@@ -87,22 +87,27 @@ const getAlbumData = () => {
     //Added a new Promise() instead of async/await so that the data parsed,
     //traversed and the albumEntries is ready before returning
     return new Promise(resolve => {
+        console.time('promiseTime');
     try {
         if (dataParsed) {
             resolve(albumEntries);
+            console.timeEnd('promiseTime');
         } else {
+            console.time('initialPromiseTime');
             fs.readFile('./data.json', 'utf8', (error, data) => {
+                console.time('parseTime')
                 if (error) {
                     console.error('Could not parse json file')
                     throw error ('Could not parse json file', error);
                 } else {
                     let { releases } = JSON.parse(data);
+                    console.timeEnd('parseTime')
                     albumData(releases);
                     dataParsed = true;
                     resolve(albumEntries);
+                    console.timeEnd('promiseTime');
                 }
             });
-
         }
     } catch (error) {
         console.error("JSON file failed to parse", error);
