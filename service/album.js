@@ -93,7 +93,6 @@ const getAlbumData = () => {
             resolve(albumEntries);
             console.timeEnd('promiseTime');
         } else {
-            console.time('initialPromiseTime');
             fs.readFile('./data.json', 'utf8', (error, data) => {
                 console.time('parseTime')
                 if (error) {
